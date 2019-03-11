@@ -1,0 +1,42 @@
+body {
+    font-size: 2rem;
+    font-family: sans-serif;
+    color: #34495e;
+
+}
+
+.widget {
+    display: inline-block;
+    border: solid 1px black;
+    text-align: center;
+}
+
+.container-flags {
+
+    display: flex;
+}
+
+.currency-flag img {
+    height: 37px;
+    width: 49px;
+}
+
+.icon-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px 0 10px;
+}
+
+.exchange-rate-route {
+    text-align: center;
+    font-size: medium;
+}
+
+.exchange-rate-value {
+    font-size: x-large;
+}
+
+.exchange-rate-date-collected {
+    font-size: x-small;
+}
