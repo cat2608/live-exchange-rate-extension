@@ -1,15 +1,13 @@
-let changeColor = document.getElementById('changeColor');
+const settingsBtn = document.querySelector('.settings');
+const settingsBox = document.querySelector('.settings-box');
+const settingsBoxClassName = settingsBox.className.slice(0);
 
-chrome.storage.sync.get('color', function (data) {
-  changeColor.style.backgroundColor = data.color;
-  changeColor.setAttribute('value', data.color);
-});
+settingsBtn.onclick = () => {
+  const showSettingsBox = settingsBox.className.indexOf("show") === -1;
 
-changeColor.onclick = function (element) {
-  let color = element.target.value;
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.executeScript(
-      tabs[0].id,
-      { code: 'document.body.style.backgroundColor = "' + color + '";' });
-  });
+  chrome.tabs.executeScript(
+    tabs[0].id,
+    { code: showSettingsBox ? settingsBox.className += " show" : settingsBox.className = settingsBoxClassName });
+});
 };

@@ -1,24 +1,24 @@
 body {
     font-size: 2rem;
     font-family: sans-serif;
-    color: #34495e;
-
+    color: #4a5860;
 }
 
 .widget {
-    display: inline-block;
-    border: solid 1px black;
+    width: 150px;
+    border: solid 1px #f2f2f2;
     text-align: center;
+    padding: 12px;
 }
 
 .container-flags {
-
     display: flex;
+    justify-content: center;
 }
 
 .currency-flag img {
-    height: 37px;
-    width: 49px;
+    height: 40px;
+    width: 40px;
 }
 
 .icon-arrow {
@@ -26,17 +26,48 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0 10px 0 10px;
+    font-size: 1rem;
 }
 
 .exchange-rate-route {
+    font-size: 1rem;
+    padding-top: 5px;
     text-align: center;
     font-size: medium;
 }
 
 .exchange-rate-value {
-    font-size: x-large;
+    padding: 5px 0 8px;
+    font-size: 1.5rem;
 }
 
 .exchange-rate-date-collected {
     font-size: x-small;
+}
+
+.settings {
+    text-align: right;
+    font-size: 10px;
+    padding-bottom: 5px;
+}
+
+.menu-separator {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    padding: 5px 0 8px 0;
+}
+
+.settings-box {
+    display: none;
+}
+
+.settings-box.show {
+    display: flex;
+    padding-bottom: 14px;
+    justify-content: center;
+}
+
+.route-direction {
+    font-size: 1rem;
+    padding: 0 8px;
 }

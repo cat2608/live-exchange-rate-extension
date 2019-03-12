@@ -11,22 +11,49 @@
 
 <body>
   <div class="widget">
+
+      <div class="settings"> ⚙ ︎Options</div>
+      <div class="menu-separator"></div>
+
+      <div class="settings-box">
+
+        <select name="" id="sourceCurrency" class="settings-box-source-currency">
+          <option value="AUD">AUD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP" selected="selected">GBP</option>
+          <option value="USD">USD</option>
+        </select>
+
+        <div class="route-direction">to</div>
+
+        <select name="" id="targetCurrency" class="settings-box-target-currency">
+          <option value="AUD">AUD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="USD">USD</option>
+          <option value="BRL" selected="selected">BRL</option>
+        </select>
+
+      </div>
+
+
     <div class="container-flags">
       <div class="currency-flag">
-        <img class="currency-img sourceCurrency" src="https://s.xe.com/themes/xe/images/flags/big/brl.png" height="87px"
+        <img class="currency-img sourceCurrency" src="flags/gbp.svg" height="87px"
           width="100px" />
       </div>
       <div class="icon-arrow">➜</div>
       <div class="currency-flag">
-        <img class="currency-img targetCurrency" src="https://s.xe.com/themes/xe/images/flags/big/cad.png" height="87px"
+        <img class="currency-img targetCurrency" src="flags/brl.svg" height="87px"
           width="100px" />
       </div>
     </div>
-    <div class="exchange-rate-route">BRL / CAD</div>
-    <div class="exchange-rate-value">1.72</div>
-    <div class="exchange-rate-date-collected">10/02/2019</div>
+    <div class="exchange-rate-route">GBP / BRL</div>
+    <div class="exchange-rate-value">5.0029</div>
+    <div class="exchange-rate-date-collected">10/02/2019 - 08:37:44</div>
   </div>
   <script src="populate.js"></script>
+  <script src="popup.js"></script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@ const targetCurrency = document.querySelector('.targetCurrency');
 const routeText = document.querySelector('.exchange-rate-route');
 const exchangeValue = document.querySelector('.exchange-rate-value');
 
-localStorage.setItem('route', JSON.stringify({ sourceCurrency: 'gbp', targetCurrency: 'eur' }));
+localStorage.setItem('route', JSON.stringify({ sourceCurrency: 'gbp', targetCurrency: 'brl' }));
 
 const route = JSON.parse(localStorage.getItem('route'));
 sourceCurrency.src = sourceCurrency.src.replace(/(.*)\/.*(\.png$)/i, `$1/${route.sourceCurrency}$2`);
