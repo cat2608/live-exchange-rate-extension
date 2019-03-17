@@ -63,7 +63,7 @@ const fetchExchangeRate = async () => {
 const updateUI = () => {
   fetchExchangeRate()
     .then(result => {
-      console.log(result);
+
       const exchangeValue = document.querySelector('.exchange-rate-value');
       const exchangeTime = document.querySelector('.exchange-rate-date-collected');
       const containerEchangeRateData = document.querySelector('.container-exchange-rate-data');
@@ -73,14 +73,14 @@ const updateUI = () => {
 
       updateCurrencyFlags();
       updateRouteText();
-      console.log('containerEchangeRateData.className ::', containerEchangeRateData.className);
+
       containerEchangeRateData.className = containerEchangeRateData.className.replace("loader", "");
 
     }).catch(err => {
-      console.log('{ERROR!}', err);
+      console.info(err); // eslint-disable-line no-console
       const container = document.querySelector('.container-exchange-rate-data');
       container.className += ' error-message';
-      container.innerHTML = "uh-oh! We can’t find the rate right now 😰. Please try again later."
+      container.innerHTML = 'uh-oh! We can’t find the rate right now 😰. Please try again later.'
     });
 };
 

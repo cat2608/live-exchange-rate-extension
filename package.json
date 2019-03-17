@@ -1,0 +1,24 @@
+{
+  "name": "exchange-rate-widget",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.15.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cat2608/exchange-rate-widget.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cat2608/exchange-rate-widget/issues"
+  },
+  "homepage": "https://github.com/cat2608/exchange-rate-widget#readme"
+}
