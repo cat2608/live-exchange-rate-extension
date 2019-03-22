@@ -1,25 +1,15 @@
 const settingsBtn = document.querySelector('.settings-label');
-const settingsBox = document.querySelector('.settings-box');
-const settingsBoxClassName = settingsBox.className.slice(0);
-
-const sourceCurrency = document.querySelector('.sourceCurrency');
-const targetCurrency = document.querySelector('.targetCurrency');
-const routeText = document.querySelector('.exchange-rate-route');
 
 let store = { ...JSON.parse(localStorage.getItem('exchangeRateQuote')) };
+store.sourceCurrency = store.sourceCurrency || document.querySelector('#sourceCurrency').value;
+store.targetCurrency = store.targetCurrency || document.querySelector('#targetCurrency').value;
+
 let exchangeRateQuote = store;
 
-
-const updateCurrencyFlags = () => {
-  sourceCurrency.src = sourceCurrency.src.replace(/(.*)\/.*(\.svg$)/i, `$1/${store.sourceCurrency.toLowerCase()}$2`);
-  targetCurrency.src = targetCurrency.src.replace(/(.*)\/.*(\.svg$)/i, `$1/${store.targetCurrency.toLowerCase()}$2`);
-};
-
-const updateRouteText = () => {
-  routeText.innerHTML = `${store.sourceCurrency.toUpperCase()} / ${store.targetCurrency.toUpperCase()}`;
-};
-
 settingsBtn.onclick = () => {
+  const settingsBox = document.querySelector('.settings-box');
+  const settingsBoxClassName = settingsBox.className.slice(0);
+
   const showSettingsBox = settingsBox.className.indexOf("show") === -1;
 
   settingsBtn.textContent = showSettingsBox ? "Close" : "Settings";
@@ -31,9 +21,24 @@ settingsBtn.onclick = () => {
   });
 };
 
-store.sourceCurrency = document.querySelector('#sourceCurrency').value;
-store.targetCurrency = document.querySelector('#targetCurrency').value;
+const updateCurrencyFlags = () => {
+  const sourceCurrencyFlag = document.querySelector('.sourceCurrency');
+  const targetCurrencyFlag = document.querySelector('.targetCurrency');
 
+  sourceCurrencyFlag.src = sourceCurrencyFlag.src.replace(/(.*)\/.*(\.svg$)/i, `$1/${store.sourceCurrency.toLowerCase()}$2`);
+  targetCurrencyFlag.src = targetCurrencyFlag.src.replace(/(.*)\/.*(\.svg$)/i, `$1/${store.targetCurrency.toLowerCase()}$2`);
+};
+
+const updateRouteText = () => {
+  const routeText = document.querySelector('.exchange-rate-route-text');
+  routeText.innerHTML = `${store.sourceCurrency.toUpperCase()} / ${store.targetCurrency.toUpperCase()}`;
+};
+
+const updateCurrencySelectors = () => {
+  const { sourceCurrency, targetCurrency } = store;
+  document.querySelector('#sourceCurrency').value = sourceCurrency;
+  document.querySelector('#targetCurrency').value = targetCurrency;
+};
 
 const updateStore = (values) => {
   store = { ...store, ...values };
@@ -66,15 +71,16 @@ const updateUI = () => {
 
       const exchangeValue = document.querySelector('.exchange-rate-value');
       const exchangeTime = document.querySelector('.exchange-rate-date-collected');
-      const containerEchangeRateData = document.querySelector('.container-exchange-rate-data');
+      const containerExchangeRateData = document.querySelector('.container-exchange-rate-data');
 
       exchangeValue.innerHTML = result.rate.toString().substring(0, 6);
       exchangeTime.innerHTML = result.timeRequested;
 
       updateCurrencyFlags();
       updateRouteText();
+      updateCurrencySelectors();
 
-      containerEchangeRateData.className = containerEchangeRateData.className.replace("loader", "");
+      containerExchangeRateData.className = containerExchangeRateData.className.replace("loader", "");
 
     }).catch(err => {
       console.info(err); // eslint-disable-line no-console
