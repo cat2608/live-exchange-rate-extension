@@ -1,4 +1,6 @@
 const settingsBtn = document.querySelector('.settings-label');
+const settingsBox = document.querySelector('.settings-box');
+const settingsBoxClassName = settingsBox.className.slice(0);
 
 let store = { ...JSON.parse(localStorage.getItem('exchangeRateQuote')) };
 store.sourceCurrency = store.sourceCurrency || document.querySelector('#sourceCurrency').value;
@@ -7,9 +9,6 @@ store.targetCurrency = store.targetCurrency || document.querySelector('#targetCu
 let exchangeRateQuote = store;
 
 settingsBtn.onclick = () => {
-  const settingsBox = document.querySelector('.settings-box');
-  const settingsBoxClassName = settingsBox.className.slice(0);
-
   const showSettingsBox = settingsBox.className.indexOf("show") === -1;
 
   settingsBtn.textContent = showSettingsBox ? "Close" : "Settings";
