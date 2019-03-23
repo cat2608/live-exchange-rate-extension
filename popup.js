@@ -97,14 +97,39 @@ const updateUI = () => {
     });
 };
 
+/* eslint-disable */
+const currencies = [
+  'AED', 'ANG', 'ARS', 'AUD', 'BBD', 'BDT', 'BGN', 'BHD', 'BMD', 'BRL', 'CAD', 'CHF', 'CLP',
+  'CNY', 'CZK', 'DKK', 'EUR', 'FJD', 'GBP', 'HKD', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'JOD',
+  'JPY', 'KES', 'KRW', 'KWD', 'LBP', 'LKR', 'MAD', 'MUR', 'MXN', 'MYR', 'NGN', 'NOK', 'NZD',
+  'OMR', 'PGK', 'PHP', 'PKR', 'PLN', 'QAR', 'RON', 'RSD', 'RUB', 'SAR', 'SBD', 'SEK', 'SGD',
+  'THB', 'TND', 'TOP', 'TRY', 'TWD', 'USD', 'VND', 'VUV', 'WST', 'XPF', 'ZAR',
+];
+/* eslint-enable */
+
 const selects = document.querySelectorAll('select');
-selects.forEach(s => {
-  s.addEventListener('change', () => {
-    const data = { [s.id]: s.value, rate: null };
+
+const populateSelectOption = (select) => {
+  currencies.forEach(c => {
+    const option = document.createElement('option');
+    option.value = c;
+    option.textContent = c;
+    select.appendChild(option);
+  });
+};
+
+const handleOnSelectCurrency = (select) => {
+  select.addEventListener('change', () => {
+    const data = { [select.id]: select.value, rate: null };
     updateStore(data);
     updateLocalStorage(data);
     updateUI();
   });
+};
+
+selects.forEach(select => {
+  populateSelectOption(select);
+  handleOnSelectCurrency(select);
 });
 
 updateUI();
