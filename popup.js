@@ -20,15 +20,18 @@ settingsBtn.onclick = () => {
   });
 };
 
-const updateCurrencyFlags = () => {
+const replaceFileName = (filePath, currencyFlagName) => filePath
+  .replace(/(.*)\/.*(\.svg$)/i, `$1/${currencyFlagName.toLowerCase()}$2`);
+
+const updateCurrencyFlagsIcon = () => {
   const sourceCurrencyFlag = document.querySelector('.sourceCurrency');
   const targetCurrencyFlag = document.querySelector('.targetCurrency');
 
-  sourceCurrencyFlag.src = sourceCurrencyFlag.src.replace(/(.*)\/.*(\.svg$)/i, `$1/${store.sourceCurrency.toLowerCase()}$2`);
-  targetCurrencyFlag.src = targetCurrencyFlag.src.replace(/(.*)\/.*(\.svg$)/i, `$1/${store.targetCurrency.toLowerCase()}$2`);
+  sourceCurrencyFlag.src = replaceFileName(sourceCurrencyFlag.src, store.sourceCurrency);
+  targetCurrencyFlag.src = replaceFileName(targetCurrencyFlag.src, store.targetCurrency);
 };
 
-const updateRouteText = () => {
+const updateRouteLabel = () => {
   const routeText = document.querySelector('.exchange-rate-route-text');
   routeText.innerHTML = `${store.sourceCurrency.toUpperCase()} / ${store.targetCurrency.toUpperCase()}`;
 };
@@ -45,10 +48,16 @@ const updateStore = (values) => {
 
 const updateLocalStorage = (values) => {
   localStorage.setItem('exchangeRateQuote', JSON.stringify(values));
-}
+};
+
+// eslint-disable-next-line no-extra-parens
+const exchangeRateSource = (sourceCurrency, targetCurrency) => (
+  `https://api.exchangeratesapi.io/latest?base=${sourceCurrency}&symbols=${targetCurrency}`
+);
 
 const fetchExchangeRate = async () => {
-  const response = await fetch(`https://api.exchangeratesapi.io/latest?base=${store.sourceCurrency}&symbols=${store.targetCurrency}`);
+  const { sourceCurrency, targetCurrency } = store;
+  const response = await fetch(exchangeRateSource(sourceCurrency, targetCurrency));
   const exchangeRate = await response.json();
   const now = new Date();
 
@@ -62,7 +71,7 @@ const fetchExchangeRate = async () => {
   updateStore(exchangeRateQuote);
 
   return exchangeRateQuote;
-}
+};
 
 const updateUI = () => {
   fetchExchangeRate()
@@ -74,18 +83,17 @@ const updateUI = () => {
 
       exchangeValue.innerHTML = result.rate.toString().substring(0, 6);
       exchangeTime.innerHTML = result.timeRequested;
-
-      updateCurrencyFlags();
-      updateRouteText();
-      updateCurrencySelectors();
-
       containerExchangeRateData.className = containerExchangeRateData.className.replace("loader", "");
+
+      updateCurrencyFlagsIcon();
+      updateRouteLabel();
+      updateCurrencySelectors();
 
     }).catch(err => {
       console.info(err); // eslint-disable-line no-console
       const container = document.querySelector('.container-exchange-rate-data');
       container.className += ' error-message';
-      container.innerHTML = 'uh-oh! We can’t find the rate right now 😰. Please try again later.'
+      container.innerHTML = 'uh-oh! We can’t find the rate right now 😰. Please try again later.';
     });
 };
 

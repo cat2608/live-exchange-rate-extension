@@ -105,7 +105,12 @@
         "lines-between-class-members": "error",
         "max-classes-per-file": "error",
         "max-depth": "error",
-        "max-len": "off",
+        "max-len": [
+            "error",
+            {
+                "code": 120
+            }
+        ],
         "max-lines": "error",
         "max-lines-per-function": "error",
         "max-nested-callbacks": "error",
@@ -251,7 +256,7 @@
             "error",
             "never"
         ],
-        "semi": "off",
+        "semi": "error",
         "semi-spacing": "error",
         "semi-style": [
             "error",
