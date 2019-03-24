@@ -12,40 +12,33 @@
 <body>
   <div class="widget">
 
-      <div class="settings-label">︎Options</div>
-      <div class="menu-separator"></div>
+    <div class="settings-label">︎Options</div>
 
-      <div class="settings-box">
+    <div class="add-currencies-label">Add more currencies</div>
 
-        <select name="" id="sourceCurrency" class="settings-box-source-currency">
-          <option value="AUD">AUD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP" selected="selected">GBP</option>
-          <option value="USD">USD</option>
-        </select>
+    <div class="settings-select">
 
-        <div class="route-direction">to</div>
+      <select name="" id="sourceCurrency" class="settings-select-source-currency">
+        <option value="GBP" selected="selected">GBP</option>
+      </select>
 
-        <select name="" id="targetCurrency" class="settings-box-target-currency">
-          <option value="AUD">AUD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="USD">USD</option>
-          <option value="BRL" selected="selected">BRL</option>
-        </select>
+      <div class="route-direction">to</div>
 
-      </div>
+      <select name="" id="targetCurrency" class="settings-select-target-currency">
+        <option value="BRL" selected="selected">BRL</option>
+      </select>
+
+    </div>
+    <div class="menu-separator"></div>
 
 
     <div class="container-flags">
       <div class="currency-flag">
-        <img class="currency-img sourceCurrency" src="flags/gbp.svg" height="87px"
-          width="100px" />
+        <img class="currency-img sourceCurrency" src="flags/gbp.svg" height="87px" width="100px" />
       </div>
       <div class="icon-arrow">➜</div>
       <div class="currency-flag">
-        <img class="currency-img targetCurrency" src="flags/brl.svg" height="87px"
-          width="100px" />
+        <img class="currency-img targetCurrency" src="flags/brl.svg" height="87px" width="100px" />
       </div>
     </div>
     <div class="container-exchange-rate-data loader">

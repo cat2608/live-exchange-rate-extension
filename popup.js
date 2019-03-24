@@ -1,24 +1,28 @@
 const settingsBtn = document.querySelector('.settings-label');
-const settingsBox = document.querySelector('.settings-box');
-const settingsBoxClassName = settingsBox.className.slice(0);
+const settingsSelect = document.querySelector('.settings-select');
+const addFavCurrencies = document.querySelector('.add-currencies-label');
+
+const settingsBoxClassName = settingsSelect.className.slice(0);
+const addFavCurrenciesClassName = addFavCurrencies.className.slice(0);
 
 let store = { ...JSON.parse(localStorage.getItem('exchangeRateQuote')) };
 store.sourceCurrency = store.sourceCurrency || document.querySelector('#sourceCurrency').value;
 store.targetCurrency = store.targetCurrency || document.querySelector('#targetCurrency').value;
 
-let exchangeRateQuote = store;
+settingsBtn.addEventListener('click', () => {
+  const showSettingsBox = settingsSelect.className.indexOf('show') === -1;
+  settingsBtn.textContent = showSettingsBox ? 'Close' : '︎Options';
+  settingsSelect.className = showSettingsBox ? `${settingsBoxClassName} show` : settingsBoxClassName;
+  addFavCurrencies.className = showSettingsBox ? `${addFavCurrenciesClassName} show` : addFavCurrenciesClassName;
+});
 
-settingsBtn.onclick = () => {
-  const showSettingsBox = settingsBox.className.indexOf("show") === -1;
-
-  settingsBtn.textContent = showSettingsBox ? "Close" : "Settings";
-
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.executeScript(
-      tabs[0].id,
-      { code: showSettingsBox ? settingsBox.className += " show" : settingsBox.className = settingsBoxClassName });
-  });
-};
+addFavCurrencies.addEventListener('click', () => {
+  if (chrome.runtime.openOptionsPage) {
+    chrome.runtime.openOptionsPage();
+  } else {
+    window.open(chrome.runtime.getURL('options.html'));
+  }
+});
 
 const replaceFileName = (filePath, currencyFlagName) => filePath
   .replace(/(.*)\/.*(\.svg$)/i, `$1/${currencyFlagName.toLowerCase()}$2`);
@@ -61,14 +65,12 @@ const fetchExchangeRateFor = async (route) => {
   const exchangeRate = await response.json();
   const now = new Date();
 
-  exchangeRateQuote = {
+  return {
     ...store,
     ...route,
     rate: exchangeRate.rates[store.targetCurrency],
     timeRequested: now.toLocaleString(),
   };
-
-  return exchangeRateQuote;
 };
 
 const getElementsFromDom = () => ({
