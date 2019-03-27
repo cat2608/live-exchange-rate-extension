@@ -2,18 +2,18 @@ const settingsBtn = document.querySelector('.settings-label');
 const settingsSelect = document.querySelector('.settings-select');
 const addFavCurrencies = document.querySelector('.add-currencies-label');
 
-const settingsBoxClassName = settingsSelect.className.slice(0);
-const addFavCurrenciesClassName = addFavCurrencies.className.slice(0);
+  const settingsSelectClassName = settingsSelect.className.slice(0);
+  const addFavCurrenciesClassName = addFavCurrencies.className.slice(0);
 
 let store = { ...JSON.parse(localStorage.getItem('exchangeRateQuote')) };
 store.sourceCurrency = store.sourceCurrency || document.querySelector('#sourceCurrency').value;
 store.targetCurrency = store.targetCurrency || document.querySelector('#targetCurrency').value;
 
 settingsBtn.addEventListener('click', () => {
-  const showSettingsBox = settingsSelect.className.indexOf('show') === -1;
-  settingsBtn.textContent = showSettingsBox ? 'Close' : '︎Options';
-  settingsSelect.className = showSettingsBox ? `${settingsBoxClassName} show` : settingsBoxClassName;
-  addFavCurrencies.className = showSettingsBox ? `${addFavCurrenciesClassName} show` : addFavCurrenciesClassName;
+  const showSettingsSelect = settingsSelect.className.indexOf('show') === -1;
+  settingsBtn.textContent = showSettingsSelect ? 'Close' : '︎Options';
+  settingsSelect.className = showSettingsSelect ? `${settingsSelectClassName} show` : settingsSelectClassName;
+  addFavCurrencies.className = showSettingsSelect ? `${addFavCurrenciesClassName} show` : addFavCurrenciesClassName;
 });
 
 addFavCurrencies.addEventListener('click', () => {
