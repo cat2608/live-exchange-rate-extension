@@ -2,8 +2,8 @@ const settingsBtn = document.querySelector('.settings-label');
 const settingsSelect = document.querySelector('.settings-select');
 const addFavCurrencies = document.querySelector('.add-currencies-label');
 
-  const settingsSelectClassName = settingsSelect.className.slice(0);
-  const addFavCurrenciesClassName = addFavCurrencies.className.slice(0);
+const settingsSelectClassName = settingsSelect.className.slice(0);
+const addFavCurrenciesClassName = addFavCurrencies.className.slice(0);
 
 let store = { ...JSON.parse(localStorage.getItem('exchangeRateQuote')) };
 store.sourceCurrency = store.sourceCurrency || document.querySelector('#sourceCurrency').value;
@@ -74,10 +74,27 @@ const fetchExchangeRateFor = async (route) => {
 };
 
 const getElementsFromDom = () => ({
-  containerExchangeRateData: document.querySelector('.container-exchange-rate-data'),
+  containerExchangeRateData: document.querySelector('.container-exchange-rate'),
+  containerFlags: document.querySelector('.container-flags'),
+  exchangeRateData: document.querySelector('.exchange-rate-data'),
+  exchangeRateError: document.querySelector('.exchange-rate-error'),
   exchangeTime: document.querySelector('.exchange-rate-date-collected'),
   exchangeValue: document.querySelector('.exchange-rate-value'),
 });
+
+const restoreExchangeRateDataContainer = () => {
+  const { exchangeRateData, exchangeRateError, containerFlags } = getElementsFromDom();
+  exchangeRateData.className = exchangeRateData.className.replace("hide", "");
+  exchangeRateError.className = exchangeRateError.className.replace("show", "");
+  containerFlags.className = containerFlags.className.replace("opaque", "");
+};
+
+const updateContainerExchangeRate = ({ rate, timeRequested }) => {
+  const { exchangeValue, exchangeTime, containerExchangeRateData } = getElementsFromDom();
+  exchangeValue.innerHTML = rate.toString().substring(0, 6);
+  exchangeTime.innerHTML = timeRequested;
+  containerExchangeRateData.className = containerExchangeRateData.className.replace("loader", "");
+};
 
 const updateUI = (data) => {
   const route = { ...store, ...data };
@@ -85,10 +102,12 @@ const updateUI = (data) => {
   fetchExchangeRateFor(route)
     .then(result => {
 
-      const { exchangeValue, exchangeTime, containerExchangeRateData } = getElementsFromDom();
-      exchangeValue.innerHTML = result.rate.toString().substring(0, 6);
-      exchangeTime.innerHTML = result.timeRequested;
-      containerExchangeRateData.className = containerExchangeRateData.className.replace("loader", "");
+      if (store.errorMessage) {
+        restoreExchangeRateDataContainer();
+        updateStore({ errorMessage: null });
+      }
+
+      updateContainerExchangeRate(result);
 
       updateCurrencyFlagsIcon();
       updateRouteLabel();
@@ -99,9 +118,12 @@ const updateUI = (data) => {
 
     }).catch(err => {
       console.info(err); // eslint-disable-line no-console
-      const container = document.querySelector('.container-exchange-rate-data');
-      container.className += ' error-message';
-      container.innerHTML = 'uh-oh! We can’t find the rate right now 😰. Please try again later.';
+      const { exchangeRateData, exchangeRateError, containerFlags } = getElementsFromDom();
+      exchangeRateData.className += ' hide';
+      exchangeRateError.className += ' show';
+      containerFlags.className += ' opaque';
+      updateCurrencyFlagsIcon();
+      updateStore({ errorMessage: true });
     });
 };
 
