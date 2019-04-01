@@ -1,6 +1,6 @@
 {
   "name": "Live Exchange Rate",
-  "version": "0.0.0.3",
+  "version": "0.0.0.4",
   "description": "Live Exchange Rate",
   "permissions": [
     "storage", "declarativeContent", "activeTab"

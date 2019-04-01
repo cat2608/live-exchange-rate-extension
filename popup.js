@@ -1,3 +1,5 @@
+import getExchangeRateFor from './src/getExchangeRate.js';
+
 const settingsBtn = document.querySelector('.settings-label');
 const settingsSelect = document.querySelector('.settings-select');
 const addFavCurrencies = document.querySelector('.add-currencies-label');
@@ -27,7 +29,7 @@ addFavCurrencies.addEventListener('click', () => {
 const replaceFileName = (filePath, currencyFlagName) => filePath
   .replace(/(.*)\/.*(\.svg$)/i, `$1/${currencyFlagName.toLowerCase()}$2`);
 
-const updateCurrencyFlagsIcon = () => {
+const updateCurrencyFlagIcons = () => {
   const sourceCurrencyFlag = document.querySelector('.sourceCurrency');
   const targetCurrencyFlag = document.querySelector('.targetCurrency');
 
@@ -54,25 +56,6 @@ const updateLocalStorage = (values) => {
   localStorage.setItem('exchangeRateQuote', JSON.stringify(values));
 };
 
-// eslint-disable-next-line no-extra-parens
-const exchangeRateSource = (sourceCurrency, targetCurrency) => (
-  `https://api.exchangeratesapi.io/latest?base=${sourceCurrency}&symbols=${targetCurrency}`
-);
-
-const fetchExchangeRateFor = async (route) => {
-  const { sourceCurrency, targetCurrency } = route;
-  const response = await fetch(exchangeRateSource(sourceCurrency, targetCurrency));
-  const exchangeRate = await response.json();
-  const now = new Date();
-
-  return {
-    ...store,
-    ...route,
-    rate: exchangeRate.rates[store.targetCurrency],
-    timeRequested: now.toLocaleString(),
-  };
-};
-
 const getElementsFromDom = () => ({
   containerExchangeRateData: document.querySelector('.container-exchange-rate'),
   containerFlags: document.querySelector('.container-flags'),
@@ -82,39 +65,40 @@ const getElementsFromDom = () => ({
   exchangeValue: document.querySelector('.exchange-rate-value'),
 });
 
-const restoreExchangeRateDataContainer = () => {
+const restoreExchangeRateContainer = () => {
   const { exchangeRateData, exchangeRateError, containerFlags } = getElementsFromDom();
   exchangeRateData.className = exchangeRateData.className.replace("hide", "");
   exchangeRateError.className = exchangeRateError.className.replace("show", "");
   containerFlags.className = containerFlags.className.replace("opaque", "");
 };
 
-const updateContainerExchangeRate = ({ rate, timeRequested }) => {
+const updateExchangeRateContainer = (rate, timeRequested) => {
   const { exchangeValue, exchangeTime, containerExchangeRateData } = getElementsFromDom();
   exchangeValue.innerHTML = rate.toString().substring(0, 6);
   exchangeTime.innerHTML = timeRequested;
   containerExchangeRateData.className = containerExchangeRateData.className.replace("loader", "");
 };
 
-const updateUI = (data) => {
-  const route = { ...store, ...data };
+const updateUI = (sourceOrTargetCurrency) => {
+  const route = { ...store, ...sourceOrTargetCurrency };
 
-  fetchExchangeRateFor(route)
-    .then(result => {
+  getExchangeRateFor(route)
+    .then(({ sourceCurrency, targetCurrency, rate, timeRequested }) => {
 
       if (store.errorMessage) {
-        restoreExchangeRateDataContainer();
+        restoreExchangeRateContainer();
         updateStore({ errorMessage: null });
+        updateLocalStorage({ errorMessage: null });
       }
 
-      updateContainerExchangeRate(result);
+      updateExchangeRateContainer(rate, timeRequested);
 
-      updateCurrencyFlagsIcon();
+      updateCurrencyFlagIcons();
       updateRouteLabel();
       updateCurrencySelectors();
 
-      updateStore(result);
-      updateLocalStorage(result);
+      updateStore({ rate, sourceCurrency, targetCurrency, timeRequested, });
+      updateLocalStorage({ rate, sourceCurrency, targetCurrency, timeRequested });
 
     }).catch(err => {
       console.info(err); // eslint-disable-line no-console
@@ -122,7 +106,7 @@ const updateUI = (data) => {
       exchangeRateData.className += ' hide';
       exchangeRateError.className += ' show';
       containerFlags.className += ' opaque';
-      updateCurrencyFlagsIcon();
+      updateCurrencyFlagIcons();
       updateStore({ errorMessage: true });
     });
 };
@@ -150,9 +134,9 @@ const populateSelectOption = (select) => {
 
 const handleOnSelectCurrency = (select) => {
   select.addEventListener('change', () => {
-    const data = { [select.id]: select.value, rate: null };
-    updateStore(data);
-    updateUI(data);
+    const sourceOrTargetCurrency = { [select.id]: select.value };
+    updateStore({ ...sourceOrTargetCurrency, rate: null });
+    updateUI(sourceOrTargetCurrency);
   });
 };
 
