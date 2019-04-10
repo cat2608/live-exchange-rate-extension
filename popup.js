@@ -57,4 +57,4 @@ DOM.selects.forEach(select => {
   handleOnSelectCurrency(select);
 });
 
-init();
+init({});

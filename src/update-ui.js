@@ -2,14 +2,12 @@ import { getInMemoryStorage, setInMemoryStorage, setLocalStorage } from './stora
 import DOM from './elements-from-dom.js';
 import updateCurrencyFlagIcons from './currency-flag-icons.js';
 
-const updateRouteLabel = () => {
-  const { sourceCurrency, targetCurrency } = getInMemoryStorage();
+const updateRouteLabel = (sourceCurrency, targetCurrency) => {
   const { routeText } = DOM;
   routeText.innerHTML = `${sourceCurrency.toUpperCase()} / ${targetCurrency.toUpperCase()}`;
 };
 
-const updateCurrencySelectors = () => {
-  const { sourceCurrency, targetCurrency } = getInMemoryStorage();
+const updateCurrencySelectors = (sourceCurrency, targetCurrency) => {
   const { sourceCurrencySelect, targetCurrencySelect } = DOM;
   sourceCurrencySelect.value = sourceCurrency;
   targetCurrencySelect.value = targetCurrency;
@@ -39,9 +37,9 @@ const updateUI = ({ rate, sourceCurrency, targetCurrency, timeRequested }) => {
 
   updateExchangeRateContainer(rate, timeRequested);
 
-  updateCurrencyFlagIcons();
-  updateRouteLabel();
-  updateCurrencySelectors();
+  updateCurrencyFlagIcons(sourceCurrency, targetCurrency);
+  updateRouteLabel(sourceCurrency, targetCurrency);
+  updateCurrencySelectors(sourceCurrency, targetCurrency);
 
   setInMemoryStorage({ rate, sourceCurrency, targetCurrency, timeRequested });
   setLocalStorage({ rate, sourceCurrency, targetCurrency, timeRequested });
