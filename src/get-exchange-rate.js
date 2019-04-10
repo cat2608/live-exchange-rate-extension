@@ -1,11 +1,12 @@
+import axios from "axios";
+
 // eslint-disable-next-line no-extra-parens
 const exchangeRateSource = (sourceCurrency, targetCurrency) => (
   `https://api.exchangeratesapi.io/latest?base=${sourceCurrency}&symbols=${targetCurrency}`
 );
 
 const getExchangeRateFor = async ({ sourceCurrency, targetCurrency }) => {
-  const response = await fetch(exchangeRateSource(sourceCurrency, targetCurrency));
-  const exchangeRate = await response.json();
+  const { data: exchangeRate } = await axios.get(exchangeRateSource(sourceCurrency, targetCurrency));
   const now = new Date();
 
   return {
