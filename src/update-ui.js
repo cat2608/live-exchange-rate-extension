@@ -29,7 +29,7 @@ const updateExchangeRateContainer = (rate, timeRequested) => {
 
 const updateUI = ({ rate, sourceCurrency, targetCurrency, timeRequested }) => {
 
-  if (getInMemoryStorage.errorMessage) {
+  if (getInMemoryStorage().errorMessage) {
     restoreExchangeRateContainer();
     setInMemoryStorage({ errorMessage: null });
     setLocalStorage({ errorMessage: null });

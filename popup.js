@@ -32,7 +32,7 @@ const init = (sourceOrTargetCurrency) => {
   const route = { ...getInMemoryStorage(), ...sourceOrTargetCurrency };
   getExchangeRateFor(route)
     .then(updateUi)
-    .catch(updateUiErrorMessage);
+    .catch(err => updateUiErrorMessage(err, route));
 };
 
 const populateSelectOption = (select) => {
