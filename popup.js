@@ -1,13 +1,14 @@
 import {
   currencyList,
   getExchangeRateFor,
-  getInMemoryStorage,
-  setInMemoryStorage,
+  getInMemoryStore,
+  setInMemoryStore,
+  updateStores,
   updateUi,
   updateUiErrorMessage,
-} from './src/index.js';
+} from './src/index';
 
-import DOM from './src/elements-from-dom.js';
+import DOM from './src/elements-from-dom';
 
 const settingsSelectClassName = DOM.settingsSelect.className.slice(0);
 const addFavCurrenciesClassName = DOM.addFavCurrencies.className.slice(0);
@@ -29,9 +30,10 @@ DOM.addFavCurrencies.addEventListener('click', () => {
 });
 
 const init = (sourceOrTargetCurrency) => {
-  const route = { ...getInMemoryStorage(), ...sourceOrTargetCurrency };
+  const route = { ...getInMemoryStore(), ...sourceOrTargetCurrency };
   getExchangeRateFor(route)
     .then(updateUi)
+    .then(updateStores)
     .catch(err => updateUiErrorMessage(err, route));
 };
 
@@ -47,7 +49,7 @@ const populateSelectOption = (select) => {
 const handleOnSelectCurrency = (select) => {
   select.addEventListener('change', () => {
     const sourceOrTargetCurrency = { [select.id]: select.value };
-    setInMemoryStorage({ ...sourceOrTargetCurrency, rate: null });
+    setInMemoryStore({ ...sourceOrTargetCurrency, rate: null });
     init(sourceOrTargetCurrency);
   });
 };

@@ -1,6 +1,5 @@
-import { getInMemoryStorage, setInMemoryStorage, setLocalStorage } from './storage.js';
-import DOM from './elements-from-dom.js';
-import updateCurrencyFlagIcons from './currency-flag-icons.js';
+import DOM from './elements-from-dom';
+import updateCurrencyFlagIcons from './currency-flag-icons';
 
 const updateRouteLabel = (sourceCurrency, targetCurrency) => {
   const { routeText } = DOM;
@@ -28,22 +27,13 @@ const updateExchangeRateContainer = (rate, timeRequested) => {
 };
 
 const updateUI = ({ rate, sourceCurrency, targetCurrency, timeRequested }) => {
-
-  if (getInMemoryStorage().errorMessage) {
-    restoreExchangeRateContainer();
-    setInMemoryStorage({ errorMessage: null });
-    setLocalStorage({ errorMessage: null });
-  }
-
+  restoreExchangeRateContainer();
   updateExchangeRateContainer(rate, timeRequested);
-
   updateCurrencyFlagIcons(sourceCurrency, targetCurrency);
   updateRouteLabel(sourceCurrency, targetCurrency);
   updateCurrencySelectors(sourceCurrency, targetCurrency);
 
-  setInMemoryStorage({ rate, sourceCurrency, targetCurrency, timeRequested });
-  setLocalStorage({ rate, sourceCurrency, targetCurrency, timeRequested });
-
+  return { rate, sourceCurrency, targetCurrency, timeRequested };
 };
 
 export default updateUI;

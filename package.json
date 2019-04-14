@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "popup.js",
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
   "devDependencies": {
     "eslint": "^5.15.2",
     "webpack": "^4.29.6",
@@ -11,7 +13,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production --watch"
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch"
   },
   "repository": {
     "type": "git",
