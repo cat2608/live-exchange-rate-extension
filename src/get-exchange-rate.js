@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const ACCESS_KEY = process.env.ACCESS_KEY;
+
 // eslint-disable-next-line no-extra-parens
 const exchangeRateSource = (sourceCurrency, targetCurrency) => (
-  `https://api.exchangeratesapi.io/latest?base=${sourceCurrency}&symbols=${targetCurrency}`
+  `http://api.exchangeratesapi.io/v1/latest?access_key=${ACCESS_KEY}&format=1base=${sourceCurrency}&symbols=${targetCurrency}`
 );
 
 const getExchangeRateFor = async ({ sourceCurrency, targetCurrency }) => {
