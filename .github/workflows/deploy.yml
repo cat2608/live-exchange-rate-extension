@@ -2,15 +2,11 @@ name: GitHub Actions Dispatch
 on:
   workflow_dispatch:
     inputs:
-      env:
-        description: 'Environment to deploy to'
+      app_name:
+        description: 'Heroku app name to deploy to'
         required: true
-        default: 'dev'
         type: choice
-        options:
-          - dev
-          - stage
-          - prod
+        options: [app-name-dev, app-name-stage]
 
 jobs:
   build:
