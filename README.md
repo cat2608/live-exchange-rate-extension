@@ -1,4 +1,4 @@
-# 💱 Exchange Rate Extension
+# 💱 Exchange Rate Extension - test
 
 Simple Chrome Extension that shows the current exchange rate from a selected route.
 
