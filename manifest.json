@@ -2,18 +2,9 @@
   "name": "Live Exchange Rate",
   "version": "0.0.0.4",
   "description": "Live Exchange Rate",
-  "permissions": [
-    "storage", "declarativeContent", "activeTab"
-  ],
-  "options_page": "options.html",
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": false
-  },
+  "permissions": ["storage", "declarativeContent", "activeTab"],
   "background": {
-    "scripts": [
-      "background.js"
-    ],
+    "scripts": ["background.js"],
     "persistent": false
   },
   "page_action": {

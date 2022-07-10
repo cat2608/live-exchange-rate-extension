@@ -1,7 +1,7 @@
 {
-  "name": "exchange-rate-widget",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@devcata/exchange-rate-widget",
+  "version": "1.0.6",
+  "description": "Simple Chrome Extension that shows the current exchange rate from a selected route.",
   "main": "popup.js",
   "dependencies": {
     "axios": "^0.27.2"
@@ -24,7 +24,7 @@
     "url": "git+https://github.com/cat2608/exchange-rate-widget.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "cat2608",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cat2608/exchange-rate-widget/issues"
