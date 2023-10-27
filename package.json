@@ -4,7 +4,7 @@
   "description": "Simple Chrome Extension that shows the current exchange rate from a selected route.",
   "main": "popup.js",
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^1.6.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
