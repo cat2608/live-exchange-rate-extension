@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ACCESS_KEY = process.env.ACCESS_KEY;
+const ACCESS_KEY = "f57009f0-c800-4e68-a25b-dfb93cade22c";
 
 // eslint-disable-next-line no-extra-parens
 const exchangeRateSource = (sourceCurrency, targetCurrency) => (
